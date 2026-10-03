@@ -285,7 +285,8 @@ addEventListener('keydown',e=>{if(e.key==='Escape')qm.classList.remove('on')});
 qf.addEventListener('submit',e=>{e.preventDefault();qr.textContent='Sending...';
 fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(qf)).toString()})
 .then(r=>{if(!r.ok)throw 0;qr.textContent='Thank you. Your request has been sent and I will reply by email.';qf.reset()})
-.catch(()=>{qr.textContent='Sending is unavailable right now. Please email amannadeemcentral766@gmail.com.'})});
+.catch(()=>{const d=new FormData(qf);const body='Name: '+d.get('name')+'\nEmail: '+d.get('email')+'\nService: '+d.get('service')+'\n\n'+d.get('message');
+qr.textContent='This request could not be sent automatically. ';const a=document.createElement('a');a.href='mailto:amannadeemcentral766@gmail.com?subject='+encodeURIComponent('Quote request: '+d.get('service'))+'&body='+encodeURIComponent(body);a.textContent='Send it by email instead';a.style.cssText='color:var(--pea);font-weight:700';qr.appendChild(a)})});
 
 document.addEventListener('click',e=>document.querySelectorAll('details.cvm[open]').forEach(d=>{if(!d.contains(e.target))d.removeAttribute('open')}));
 
